@@ -2,7 +2,6 @@ import Image from "next/image"
 import loading from '../../../public/images/loading.gif'
 import useAuth from "../../data/hook/useAuth"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
 import Head from "next/head"
 export default function ForcarAutenticacao(props){
 
@@ -43,9 +42,7 @@ export default function ForcarAutenticacao(props){
     } else if(carregando) {
         return renderizarCarregando()
     } else {
-        useEffect(()=> {
-            router.push('/autenticacao')
-        },[])
+        router.push('/autenticacao')
         return null
     }
 }
