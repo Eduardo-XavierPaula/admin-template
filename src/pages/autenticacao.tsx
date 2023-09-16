@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthInput from "../components/auth/AuthInput";
 import Image from "next/image";
 import { IconAtencao } from "../components/icons";
 import useAuth from "../data/hook/useAuth";
 
-export default function Autenticacao(){
+export async function getServerSideProps(){
+    const res = await fetch('https://source.unsplash.com/random')
+    const imageUrl = await res.url
+    return {
+        props: {
+            imageUrl: imageUrl
+        }
+    }
+}
+
+export default function Autenticacao(props){
 
     const { login, cadastrar, loginGoogle} = useAuth()
 
@@ -32,12 +42,13 @@ export default function Autenticacao(){
 
     return(
         <div className="flex h-screen items-center justify-center">
-            <div className="hidden md:block md:w-1/2 lg:w-2/3">
-                <img
-                src="https://source.unsplash.com/random"
-                alt="Imagem da Tela de Autenticação"
-                loading="lazy"
-                className="h-screen w-full object-cover"
+            <div className="hidden md:flex h-full md:w-1/2 lg:w-2/3 relative">
+                <Image
+                    src={props.imageUrl}
+                    alt="Imagem da Tela de Autenticação"
+                    loading="lazy"
+                    fill={true}
+                    className="h-screen w-full object-cover"
                 />
             </div>
             <div className="m-10 w-full md:w-1/2 lg:w-1/3">
